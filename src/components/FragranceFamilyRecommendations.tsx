@@ -3,84 +3,88 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 
-interface PriceBasedBrowsingProps {
+interface FragranceFamilyRecommendationsProps {
   onBack: () => void;
 }
 
-const PriceBasedBrowsing: React.FC<PriceBasedBrowsingProps> = ({ onBack }) => {
-  const [selectedPriceRange, setSelectedPriceRange] = useState<string>('');
+const FragranceFamilyRecommendations: React.FC<FragranceFamilyRecommendationsProps> = ({ onBack }) => {
+  const [selectedFamily, setSelectedFamily] = useState<string>('');
 
-  const priceRanges = [
+  const fragranceFamilies = [
     {
-      id: 'budget',
-      title: '10만원 이하',
-      subtitle: '합리적인 가격의 향수',
-      icon: '💝',
-      color: 'from-green-50 to-green-100',
+      id: 'floral',
+      title: '플로럴',
+      subtitle: '꽃 향의 로맨틱한 향수',
+      icon: '🌸',
+      color: 'from-pink-50 to-pink-100',
+      description: '장미, 자스민, 라벤더 등의 꽃 향',
       perfumes: [
-        { name: 'Body Shop White Musk', brand: 'The Body Shop', price: '89,000원', rating: 4.2 },
-        { name: 'Zara Rose', brand: 'Zara', price: '65,000원', rating: 4.0 },
-        { name: 'Nature Republic Forest Story', brand: 'Nature Republic', price: '45,000원', rating: 3.8 }
+        { name: 'Miss Dior', brand: 'Dior', price: '125,000원', rating: 4.6 },
+        { name: 'Daisy', brand: 'Marc Jacobs', price: '95,000원', rating: 4.3 },
+        { name: 'Blooming Bouquet', brand: 'Gucci', price: '110,000원', rating: 4.4 }
       ]
     },
     {
-      id: 'mid',
-      title: '10-20만원',
-      subtitle: '중급 브랜드 향수',
-      icon: '🌟',
-      color: 'from-blue-50 to-blue-100',
+      id: 'woody',
+      title: '우디',
+      subtitle: '따뜻하고 깊은 나무 향',
+      icon: '🌲',
+      color: 'from-amber-50 to-amber-100',
+      description: '삼나무, 샌달우드, 베티버 등',
+      perfumes: [
+        { name: 'Oud Wood', brand: 'Tom Ford', price: '520,000원', rating: 4.8 },
+        { name: 'Santal 33', brand: 'Le Labo', price: '320,000원', rating: 4.7 },
+        { name: 'Tam Dao', brand: 'Diptyque', price: '180,000원', rating: 4.5 }
+      ]
+    },
+    {
+      id: 'fresh',
+      title: '프레시',
+      subtitle: '상쾌하고 깔끔한 향',
+      icon: '🍃',
+      color: 'from-green-50 to-green-100',
+      description: '시트러스, 그린, 아쿠아틱 노트',
       perfumes: [
         { name: 'Light Blue', brand: 'Dolce & Gabbana', price: '165,000원', rating: 4.5 },
-        { name: 'Good Girl', brand: 'Carolina Herrera', price: '145,000원', rating: 4.4 },
-        { name: 'Flowerbomb', brand: 'Viktor & Rolf', price: '180,000원', rating: 4.6 }
+        { name: 'Acqua Di Gio', brand: 'Armani', price: '140,000원', rating: 4.4 },
+        { name: 'Un Jardin Sur Le Toit', brand: 'Hermès', price: '220,000원', rating: 4.6 }
       ]
     },
     {
-      id: 'premium',
-      title: '20-40만원',
-      subtitle: '프리미엄 브랜드 향수',
-      icon: '👑',
+      id: 'oriental',
+      title: '오리엔탈',
+      subtitle: '신비롭고 관능적인 향',
+      icon: '🌙',
       color: 'from-purple-50 to-purple-100',
+      description: '스파이스, 앰버, 머스크 등',
       perfumes: [
-        { name: 'Santal 33', brand: 'Le Labo', price: '320,000원', rating: 4.7 },
         { name: 'Black Opium', brand: 'YSL', price: '285,000원', rating: 4.5 },
-        { name: 'La Vie Est Belle', brand: 'Lancôme', price: '240,000원', rating: 4.3 }
-      ]
-    },
-    {
-      id: 'luxury',
-      title: '40만원 이상',
-      subtitle: '럭셔리 하이엔드 향수',
-      icon: '💎',
-      color: 'from-champagne-50 to-champagne-100',
-      perfumes: [
-        { name: 'Baccarat Rouge 540', brand: 'Maison Francis Kurkdjian', price: '480,000원', rating: 4.8 },
-        { name: 'Oud Wood', brand: 'Tom Ford', price: '520,000원', rating: 4.9 },
-        { name: 'Grand Soir', brand: 'Maison Francis Kurkdjian', price: '450,000원', rating: 4.7 }
+        { name: 'Hypnotic Poison', brand: 'Dior', price: '130,000원', rating: 4.3 },
+        { name: 'Opium', brand: 'YSL', price: '150,000원', rating: 4.2 }
       ]
     }
   ];
 
-  if (selectedPriceRange) {
-    const selectedRange = priceRanges.find(range => range.id === selectedPriceRange);
+  if (selectedFamily) {
+    const family = fragranceFamilies.find(f => f.id === selectedFamily);
     
     return (
       <div className="min-h-screen bg-luxury-gradient py-12 px-4">
         <div className="max-w-6xl mx-auto">
           <Card className="perfume-card animate-fade-in">
             <CardHeader className="text-center">
-              <div className="text-6xl mb-4">{selectedRange?.icon}</div>
+              <div className="text-6xl mb-4">{family?.icon}</div>
               <CardTitle className="luxury-text text-3xl text-champagne-800 mb-4">
-                {selectedRange?.title} 향수 컬렉션
+                {family?.title} 향조
               </CardTitle>
               <CardDescription className="text-lg text-champagne-600">
-                {selectedRange?.subtitle}
+                {family?.description}
               </CardDescription>
             </CardHeader>
             
             <CardContent className="space-y-6">
               <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {selectedRange?.perfumes.map((perfume, index) => (
+                {family?.perfumes.map((perfume, index) => (
                   <Card key={index} className="bg-white rounded-xl shadow-lg hover:shadow-xl transition-shadow">
                     <CardContent className="p-6">
                       <div className="flex justify-between items-start mb-4">
@@ -112,11 +116,11 @@ const PriceBasedBrowsing: React.FC<PriceBasedBrowsingProps> = ({ onBack }) => {
 
               <div className="flex justify-center pt-6">
                 <Button 
-                  onClick={() => setSelectedPriceRange('')}
+                  onClick={() => setSelectedFamily('')}
                   variant="outline"
                   className="border-champagne-300 text-champagne-700 px-8 py-3 rounded-full mr-4"
                 >
-                  다른 가격대 보기
+                  다른 향조 보기
                 </Button>
                 <Button 
                   onClick={onBack}
@@ -138,33 +142,36 @@ const PriceBasedBrowsing: React.FC<PriceBasedBrowsingProps> = ({ onBack }) => {
       <div className="max-w-4xl mx-auto">
         <Card className="perfume-card animate-fade-in">
           <CardHeader className="text-center">
-            <div className="text-6xl mb-6">💰</div>
+            <div className="text-6xl mb-6">🌸</div>
             <CardTitle className="luxury-text text-3xl text-champagne-800 mb-4">
-              가격대별 향수 탐색
+              향조별 추천
             </CardTitle>
             <CardDescription className="text-lg text-champagne-600">
-              예산에 맞는 완벽한 향수를 찾아보세요
+              선호하는 향의 계열을 선택해보세요
             </CardDescription>
           </CardHeader>
           
           <CardContent className="space-y-6">
             <div className="grid md:grid-cols-2 gap-6">
-              {priceRanges.map((range) => (
+              {fragranceFamilies.map((family) => (
                 <Card 
-                  key={range.id}
-                  className={`cursor-pointer hover:scale-105 transition-all duration-300 bg-gradient-to-br ${range.color} border-0 shadow-lg hover:shadow-xl`}
-                  onClick={() => setSelectedPriceRange(range.id)}
+                  key={family.id}
+                  className={`cursor-pointer hover:scale-105 transition-all duration-300 bg-gradient-to-br ${family.color} border-0 shadow-lg hover:shadow-xl`}
+                  onClick={() => setSelectedFamily(family.id)}
                 >
                   <CardContent className="p-8 text-center">
-                    <div className="text-5xl mb-4">{range.icon}</div>
+                    <div className="text-5xl mb-4">{family.icon}</div>
                     <h3 className="luxury-text text-2xl font-bold text-champagne-800 mb-3">
-                      {range.title}
+                      {family.title}
                     </h3>
-                    <p className="text-champagne-600 text-lg">
-                      {range.subtitle}
+                    <p className="text-champagne-600 text-lg mb-3">
+                      {family.subtitle}
+                    </p>
+                    <p className="text-champagne-500 text-sm">
+                      {family.description}
                     </p>
                     <div className="mt-4 text-sm text-champagne-500">
-                      {range.perfumes.length}개의 추천 향수
+                      {family.perfumes.length}개의 추천 향수
                     </div>
                   </CardContent>
                 </Card>
@@ -177,4 +184,4 @@ const PriceBasedBrowsing: React.FC<PriceBasedBrowsingProps> = ({ onBack }) => {
   );
 };
 
-export default PriceBasedBrowsing;
+export default FragranceFamilyRecommendations;
