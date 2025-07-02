@@ -3,8 +3,11 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import PerfumeQuiz from "@/components/PerfumeQuiz";
-import TodayPerfume from "@/components/TodayPerfume";
+import SituationalPerfume from "@/components/SituationalPerfume";
 import CollectionManager from "@/components/CollectionManager";
+import PriceBasedBrowsing from "@/components/PriceBasedBrowsing";
+import FragranceFamilyRecommendations from "@/components/FragranceFamilyRecommendations";
+import PerfumeCommunity from "@/components/PerfumeCommunity";
 
 const Index = () => {
   const [currentView, setCurrentView] = useState('home');
@@ -13,10 +16,16 @@ const Index = () => {
     switch (currentView) {
       case 'quiz':
         return <PerfumeQuiz onBack={() => setCurrentView('home')} />;
-      case 'today':
-        return <TodayPerfume onBack={() => setCurrentView('home')} />;
+      case 'situational':
+        return <SituationalPerfume onBack={() => setCurrentView('home')} />;
       case 'collection':
         return <CollectionManager onBack={() => setCurrentView('home')} />;
+      case 'price-browse':
+        return <PriceBasedBrowsing onBack={() => setCurrentView('home')} />;
+      case 'fragrance-family':
+        return <FragranceFamilyRecommendations onBack={() => setCurrentView('home')} />;
+      case 'community':
+        return <PerfumeCommunity onBack={() => setCurrentView('home')} />;
       default:
         return (
           <div className="min-h-screen">
@@ -55,11 +64,11 @@ const Index = () => {
                       ✨ 향수 추천받기
                     </Button>
                     <Button 
-                      onClick={() => setCurrentView('today')}
+                      onClick={() => setCurrentView('situational')}
                       variant="outline" 
                       className="border-2 border-champagne-300 text-champagne-700 px-10 py-6 text-xl rounded-full hover:bg-gradient-to-r hover:from-champagne-50 hover:to-rose-50 transition-all duration-300 shadow-lg font-semibold"
                     >
-                      📅 오늘의 향수
+                      🎯 상황별 향수
                     </Button>
                   </div>
                 </div>
@@ -82,7 +91,7 @@ const Index = () => {
                   </p>
                 </div>
 
-                <div className="grid md:grid-cols-3 gap-10">
+                <div className="grid md:grid-cols-3 gap-10 mb-10">
                   <Card 
                     className="perfume-card cursor-pointer hover:scale-105 transition-all duration-500 animate-slide-in border-0 shadow-2xl bg-gradient-to-br from-champagne-50 to-champagne-100"
                     onClick={() => setCurrentView('quiz')}
@@ -108,12 +117,12 @@ const Index = () => {
 
                   <Card 
                     className="perfume-card cursor-pointer hover:scale-105 transition-all duration-500 animate-slide-in border-0 shadow-2xl bg-gradient-to-br from-rose-50 to-rose-100"
-                    onClick={() => setCurrentView('today')}
+                    onClick={() => setCurrentView('situational')}
                     style={{ animationDelay: '0.2s' }}
                   >
                     <CardHeader className="text-center pb-6">
                       <div className="w-20 h-20 bg-gradient-to-br from-rose-400 to-champagne-400 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
-                        <span className="text-3xl">📅</span>
+                        <span className="text-3xl">🎯</span>
                       </div>
                       <CardTitle className="luxury-text text-2xl text-champagne-800 mb-3">
                         상황별 향수 선택
@@ -150,6 +159,81 @@ const Index = () => {
                       <CardDescription className="text-champagne-700 leading-relaxed text-base">
                         소중한 향수들을 아름답게 정리하고, 
                         사용 기록과 개인적인 감상을 체계적으로 관리하세요.
+                      </CardDescription>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Additional Features Row */}
+                <div className="grid md:grid-cols-3 gap-10">
+                  <Card 
+                    className="perfume-card cursor-pointer hover:scale-105 transition-all duration-500 animate-slide-in border-0 shadow-2xl bg-gradient-to-br from-blue-50 to-blue-100"
+                    onClick={() => setCurrentView('price-browse')}
+                    style={{ animationDelay: '0.6s' }}
+                  >
+                    <CardHeader className="text-center pb-6">
+                      <div className="w-20 h-20 bg-gradient-to-br from-blue-400 to-champagne-400 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                        <span className="text-3xl">💰</span>
+                      </div>
+                      <CardTitle className="luxury-text text-2xl text-champagne-800 mb-3">
+                        가격대별 탐색
+                      </CardTitle>
+                      <CardDescription className="text-champagne-600 text-lg font-medium">
+                        예산에 맞는 선택
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="text-center">
+                      <CardDescription className="text-champagne-700 leading-relaxed text-base">
+                        원하는 가격대의 향수들을 쉽게 찾아보고, 
+                        예산에 맞는 최고의 향수를 발견하세요.
+                      </CardDescription>
+                    </CardContent>
+                  </Card>
+
+                  <Card 
+                    className="perfume-card cursor-pointer hover:scale-105 transition-all duration-500 animate-slide-in border-0 shadow-2xl bg-gradient-to-br from-green-50 to-green-100"
+                    onClick={() => setCurrentView('fragrance-family')}
+                    style={{ animationDelay: '0.8s' }}
+                  >
+                    <CardHeader className="text-center pb-6">
+                      <div className="w-20 h-20 bg-gradient-to-br from-green-400 to-champagne-400 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                        <span className="text-3xl">🌸</span>
+                      </div>
+                      <CardTitle className="luxury-text text-2xl text-champagne-800 mb-3">
+                        향조별 추천
+                      </CardTitle>
+                      <CardDescription className="text-champagne-600 text-lg font-medium">
+                        향의 카테고리별 탐색
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="text-center">
+                      <CardDescription className="text-champagne-700 leading-relaxed text-base">
+                        플로럴, 우디, 프레시 등 향조별로 분류된 
+                        향수들을 탐색하고 취향에 맞는 향을 찾아보세요.
+                      </CardDescription>
+                    </CardContent>
+                  </Card>
+
+                  <Card 
+                    className="perfume-card cursor-pointer hover:scale-105 transition-all duration-500 animate-slide-in border-0 shadow-2xl bg-gradient-to-br from-orange-50 to-orange-100"
+                    onClick={() => setCurrentView('community')}
+                    style={{ animationDelay: '1s' }}
+                  >
+                    <CardHeader className="text-center pb-6">
+                      <div className="w-20 h-20 bg-gradient-to-br from-orange-400 to-champagne-400 rounded-full flex items-center justify-center mx-auto mb-6 shadow-lg">
+                        <span className="text-3xl">👥</span>
+                      </div>
+                      <CardTitle className="luxury-text text-2xl text-champagne-800 mb-3">
+                        향수 커뮤니티
+                      </CardTitle>
+                      <CardDescription className="text-champagne-600 text-lg font-medium">
+                        리뷰와 정보 공유
+                      </CardDescription>
+                    </CardHeader>
+                    <CardContent className="text-center">
+                      <CardDescription className="text-champagne-700 leading-relaxed text-base">
+                        다양한 향수의 리뷰와 별점을 확인하고, 
+                        향조 정보와 사용자들의 생생한 후기를 만나보세요.
                       </CardDescription>
                     </CardContent>
                   </Card>

@@ -2,8 +2,6 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 
 interface QuizProps {
@@ -181,15 +179,17 @@ const PerfumeQuiz: React.FC<QuizProps> = ({ onBack }) => {
   };
 
   const handleAnswer = (value: string) => {
-    setAnswers(prev => ({ ...prev, [questions[currentQuestion].id]: value }));
-  };
-
-  const handleNext = () => {
-    if (currentQuestion < questions.length - 1) {
-      setCurrentQuestion(currentQuestion + 1);
-    } else {
-      setShowResults(true);
-    }
+    const newAnswers = { ...answers, [questions[currentQuestion].id]: value };
+    setAnswers(newAnswers);
+    
+    // Automatically proceed to next question after a short delay
+    setTimeout(() => {
+      if (currentQuestion < questions.length - 1) {
+        setCurrentQuestion(currentQuestion + 1);
+      } else {
+        setShowResults(true);
+      }
+    }, 300);
   };
 
   const handlePrevious = () => {
@@ -293,7 +293,6 @@ const PerfumeQuiz: React.FC<QuizProps> = ({ onBack }) => {
 
   const progress = ((currentQuestion + 1) / questions.length) * 100;
   const currentQ = questions[currentQuestion];
-  const hasAnswer = answers[currentQ.id];
 
   return (
     <div className="min-h-screen bg-luxury-gradient py-12 px-4">
@@ -319,23 +318,38 @@ const PerfumeQuiz: React.FC<QuizProps> = ({ onBack }) => {
           </CardHeader>
           
           <CardContent className="p-8">
-            <RadioGroup 
-              value={answers[currentQ.id] || ''} 
-              onValueChange={handleAnswer}
-              className="space-y-4"
-            >
+            <div className="space-y-4">
               {currentQ.options.map((option, index) => (
-                <div key={option.value} className="flex items-start space-x-4 p-5 rounded-2xl border-2 border-champagne-200 hover:border-champagne-300 hover:bg-gradient-to-r hover:from-champagne-50 hover:to-rose-50 transition-all duration-300 cursor-pointer group">
-                  <RadioGroupItem value={option.value} id={option.value} className="mt-1" />
-                  <Label 
-                    htmlFor={option.value} 
-                    className="text-champagne-700 cursor-pointer flex-1 leading-relaxed group-hover:text-champagne-800 transition-colors"
-                  >
-                    {option.label}
-                  </Label>
+                <div 
+                  key={option.value} 
+                  onClick={() => handleAnswer(option.value)}
+                  className={`flex items-start space-x-4 p-6 rounded-2xl border-2 cursor-pointer transition-all duration-300 transform hover:scale-[1.02] hover:shadow-lg ${
+                    answers[currentQ.id] === option.value 
+                      ? 'border-golden-gradient bg-gradient-to-r from-champagne-100 to-rose-100 shadow-md' 
+                      : 'border-champagne-200 hover:border-champagne-300 hover:bg-gradient-to-r hover:from-champagne-50 hover:to-rose-50'
+                  }`}
+                >
+                  <div className={`w-6 h-6 rounded-full border-2 flex items-center justify-center mt-1 transition-all duration-200 ${
+                    answers[currentQ.id] === option.value 
+                      ? 'border-champagne-500 bg-golden-gradient' 
+                      : 'border-champagne-300'
+                  }`}>
+                    {answers[currentQ.id] === option.value && (
+                      <div className="w-3 h-3 bg-white rounded-full"></div>
+                    )}
+                  </div>
+                  <div className="flex-1">
+                    <p className={`leading-relaxed transition-colors ${
+                      answers[currentQ.id] === option.value 
+                        ? 'text-champagne-800 font-medium' 
+                        : 'text-champagne-700'
+                    }`}>
+                      {option.label}
+                    </p>
+                  </div>
                 </div>
               ))}
-            </RadioGroup>
+            </div>
 
             <div className="flex justify-between mt-10">
               <Button 
@@ -346,13 +360,9 @@ const PerfumeQuiz: React.FC<QuizProps> = ({ onBack }) => {
               >
                 이전
               </Button>
-              <Button 
-                onClick={handleNext}
-                disabled={!hasAnswer}
-                className="bg-golden-gradient text-white px-8 py-3 text-lg rounded-full hover:scale-105 transition-transform shadow-lg disabled:opacity-50 disabled:hover:scale-100"
-              >
-                {currentQuestion === questions.length - 1 ? '결과 보기' : '다음'}
-              </Button>
+              <div className="text-champagne-600 text-sm flex items-center">
+                선택하면 자동으로 다음 질문으로 넘어갑니다
+              </div>
             </div>
           </CardContent>
         </Card>

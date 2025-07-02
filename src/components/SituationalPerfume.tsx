@@ -1,15 +1,14 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox";
 
-interface TodayPerfumeProps {
+interface SituationalPerfumeProps {
   onBack: () => void;
 }
 
-const TodayPerfume: React.FC<TodayPerfumeProps> = ({ onBack }) => {
+const SituationalPerfume: React.FC<SituationalPerfumeProps> = ({ onBack }) => {
   const [selectedSchedule, setSelectedSchedule] = useState<string>('');
   const [selectedWeather, setSelectedWeather] = useState<string>('');
   const [selectedMoods, setSelectedMoods] = useState<string[]>([]);
@@ -93,7 +92,7 @@ const TodayPerfume: React.FC<TodayPerfumeProps> = ({ onBack }) => {
           <Card className="perfume-card animate-fade-in">
             <CardHeader className="text-center">
               <CardTitle className="luxury-text text-3xl text-champagne-800 mb-4">
-                오늘의 추천 향수
+                상황별 추천 향수
               </CardTitle>
               <CardDescription className="text-lg text-champagne-600">
                 당신의 일정과 기분에 맞는 완벽한 선택
@@ -161,7 +160,7 @@ const TodayPerfume: React.FC<TodayPerfumeProps> = ({ onBack }) => {
         <Card className="perfume-card animate-fade-in">
           <CardHeader className="text-center">
             <CardTitle className="luxury-text text-3xl text-champagne-800 mb-4">
-              오늘의 향수 선택
+              상황별 향수 선택
             </CardTitle>
             <CardDescription className="text-lg text-champagne-600">
               오늘의 일정과 기분을 알려주시면 가장 적합한 향수를 추천해드릴게요
@@ -238,4 +237,4 @@ const TodayPerfume: React.FC<TodayPerfumeProps> = ({ onBack }) => {
   );
 };
 
-export default TodayPerfume;
+export default SituationalPerfume;
