@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
@@ -94,6 +93,7 @@ const CollectionManager: React.FC<CollectionManagerProps> = ({ onBack }) => {
 
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [selectedPerfume, setSelectedPerfume] = useState<Perfume | null>(null);
+  const [isDetailModalOpen, setIsDetailModalOpen] = useState(false);
   const [viewMode, setViewMode] = useState<'grid' | 'list'>('grid');
   const [newPerfume, setNewPerfume] = useState<Partial<Perfume>>({
     rating: 5,
@@ -130,6 +130,21 @@ const CollectionManager: React.FC<CollectionManagerProps> = ({ onBack }) => {
       setNewPerfume({ rating: 5, favorite: false, usageCount: 0 });
       setIsAddModalOpen(false);
     }
+  };
+
+  const handlePerfumeClick = (perfume: Perfume) => {
+    setSelectedPerfume(perfume);
+    setIsDetailModalOpen(true);
+  };
+
+  const updateUsageCount = (id: string) => {
+    setPerfumes(perfumes.map(perfume => 
+      perfume.id === id ? { 
+        ...perfume, 
+        usageCount: perfume.usageCount + 1,
+        lastUsed: new Date().toISOString().split('T')[0]
+      } : perfume
+    ));
   };
 
   const getCategoryInfo = (value: string) => {
@@ -392,7 +407,7 @@ const CollectionManager: React.FC<CollectionManagerProps> = ({ onBack }) => {
               <Card 
                 key={perfume.id} 
                 className={`perfume-card animate-fade-in border-0 shadow-xl hover:shadow-2xl transition-all duration-300 cursor-pointer bg-gradient-to-br ${categoryInfo.color}`}
-                onClick={() => setSelectedPerfume(perfume)}
+                onClick={() => handlePerfumeClick(perfume)}
               >
                 <CardHeader className="relative">
                   <div className="flex justify-between items-start">
@@ -458,6 +473,121 @@ const CollectionManager: React.FC<CollectionManagerProps> = ({ onBack }) => {
             );
           })}
         </div>
+
+        {/* Perfume Detail Modal */}
+        <Dialog open={isDetailModalOpen} onOpenChange={setIsDetailModalOpen}>
+          <DialogContent className="bg-white max-w-3xl border-0 shadow-2xl rounded-2xl">
+            {selectedPerfume && (
+              <>
+                <DialogHeader className="pb-6">
+                  <div className="flex items-center justify-center gap-4 mb-4">
+                    <div className="text-6xl">{selectedPerfume.photo}</div>
+                    <div className="text-center">
+                      <DialogTitle className="luxury-text text-4xl text-champagne-800">
+                        {selectedPerfume.name}
+                      </DialogTitle>
+                      <DialogDescription className="text-champagne-600 text-xl font-medium">
+                        {selectedPerfume.brand}
+                      </DialogDescription>
+                    </div>
+                  </div>
+                </DialogHeader>
+                
+                <div className="space-y-6">
+                  {/* Rating and Category */}
+                  <div className="flex justify-center items-center gap-6">
+                    <div className="flex items-center gap-2">
+                      {renderStars(selectedPerfume.rating)}
+                      <span className="text-lg font-bold text-champagne-800">
+                        {selectedPerfume.rating}/5
+                      </span>
+                    </div>
+                    <span className="bg-golden-gradient text-white px-4 py-2 rounded-full text-sm font-medium">
+                      {getCategoryInfo(selectedPerfume.category).emoji} {getCategoryInfo(selectedPerfume.category).label}
+                    </span>
+                  </div>
+
+                  {/* Personal Notes */}
+                  {selectedPerfume.notes && (
+                    <div className="bg-champagne-50 p-6 rounded-xl">
+                      <h3 className="text-lg font-bold text-champagne-800 mb-3">개인 노트</h3>
+                      <p className="text-champagne-700 leading-relaxed">
+                        {selectedPerfume.notes}
+                      </p>
+                    </div>
+                  )}
+
+                  {/* Details Grid */}
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+                    <div className="text-center bg-champagne-50 p-4 rounded-xl">
+                      <div className="text-2xl font-bold text-champagne-800 mb-1">
+                        {selectedPerfume.usageCount}회
+                      </div>
+                      <div className="text-champagne-600 text-sm">사용 횟수</div>
+                    </div>
+                    <div className="text-center bg-champagne-50 p-4 rounded-xl">
+                      <div className="text-2xl font-bold text-champagne-800 mb-1">
+                        {selectedPerfume.size}
+                      </div>
+                      <div className="text-champagne-600 text-sm">용량</div>
+                    </div>
+                    <div className="text-center bg-champagne-50 p-4 rounded-xl">
+                      <div className="text-2xl font-bold text-champagne-800 mb-1">
+                        ₩{parseInt(selectedPerfume.price).toLocaleString()}
+                      </div>
+                      <div className="text-champagne-600 text-sm">구매 가격</div>
+                    </div>
+                    <div className="text-center bg-champagne-50 p-4 rounded-xl">
+                      <div className="text-2xl font-bold text-champagne-800 mb-1">
+                        {selectedPerfume.purchaseDate}
+                      </div>
+                      <div className="text-champagne-600 text-sm">구매일</div>
+                    </div>
+                  </div>
+
+                  {/* Last Used */}
+                  {selectedPerfume.lastUsed && (
+                    <div className="text-center bg-champagne-50 p-4 rounded-xl">
+                      <div className="text-lg font-bold text-champagne-800 mb-1">
+                        마지막 사용: {selectedPerfume.lastUsed}
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Action Buttons */}
+                  <div className="flex gap-4 pt-4">
+                    <Button 
+                      onClick={() => {
+                        toggleFavorite(selectedPerfume.id);
+                        setSelectedPerfume({
+                          ...selectedPerfume,
+                          favorite: !selectedPerfume.favorite
+                        });
+                      }}
+                      variant="outline"
+                      className="flex-1 border-2 border-red-300 text-red-600 hover:bg-red-50 rounded-full py-3"
+                    >
+                      {selectedPerfume.favorite ? '❤️ 즐겨찾기 해제' : '🤍 즐겨찾기 추가'}
+                    </Button>
+                    <Button 
+                      onClick={() => {
+                        updateUsageCount(selectedPerfume.id);
+                        setSelectedPerfume({
+                          ...selectedPerfume,
+                          usageCount: selectedPerfume.usageCount + 1,
+                          lastUsed: new Date().toISOString().split('T')[0]
+                        });
+                      }}
+                      className="flex-1 bg-golden-gradient text-white rounded-full py-3"
+                    >
+                      ✨ 사용 기록하기
+                    </Button>
+                  </div>
+                </div>
+              </>
+            )}
+          </DialogContent>
+        </Dialog>
 
         {/* Back Button */}
         <div className="flex justify-center mt-16">

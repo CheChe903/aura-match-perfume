@@ -11,24 +11,26 @@ import FragranceFamilyRecommendations from "@/components/FragranceFamilyRecommen
 import PerfumeCommunity from "@/components/PerfumeCommunity";
 
 const Index = () => {
-  const [currentView, setCurrentView] = useState('collection'); // Changed default to 'collection'
+  const [currentView, setCurrentView] = useState('home');
 
   const renderView = () => {
     switch (currentView) {
+      case 'home':
+        return <CollectionManager onBack={() => setCurrentView('home')} />;
       case 'quiz':
-        return <PerfumeQuiz onBack={() => setCurrentView('collection')} />;
+        return <PerfumeQuiz onBack={() => setCurrentView('home')} />;
       case 'situational':
-        return <SituationalPerfume onBack={() => setCurrentView('collection')} />;
+        return <SituationalPerfume onBack={() => setCurrentView('home')} />;
       case 'collection':
-        return <CollectionManager onBack={() => setCurrentView('collection')} />;
+        return <CollectionManager onBack={() => setCurrentView('home')} />;
       case 'price-browse':
-        return <PriceBasedBrowsing onBack={() => setCurrentView('collection')} />;
+        return <PriceBasedBrowsing onBack={() => setCurrentView('home')} />;
       case 'fragrance-family':
-        return <FragranceFamilyRecommendations onBack={() => setCurrentView('collection')} />;
+        return <FragranceFamilyRecommendations onBack={() => setCurrentView('home')} />;
       case 'community':
-        return <PerfumeCommunity onBack={() => setCurrentView('collection')} />;
+        return <PerfumeCommunity onBack={() => setCurrentView('home')} />;
       default:
-        return <CollectionManager onBack={() => setCurrentView('collection')} />;
+        return <CollectionManager onBack={() => setCurrentView('home')} />;
     }
   };
 

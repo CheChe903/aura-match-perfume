@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { 
+  Home,
   Sparkles, 
   Target, 
   Heart, 
@@ -10,6 +11,7 @@ import {
 } from 'lucide-react';
 
 const menuItems = [
+  { title: "홈", view: "home", icon: Home },
   { title: "향수 추천", view: "quiz", icon: Sparkles },
   { title: "상황별 향수", view: "situational", icon: Target },
   { title: "내 향수 관리", view: "collection", icon: Heart },
