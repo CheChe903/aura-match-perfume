@@ -134,11 +134,31 @@ const Index = () => {
 
                   <Card 
                     className="perfume-card cursor-pointer hover:scale-105 transition-all duration-500 animate-slide-in border-0 shadow-2xl bg-gradient-to-br from-blue-50 to-blue-100"
-                    onClick={() => setCurrentView('price-browse')}
+                    onClick={() => setCurrentView('situational')}
                     style={{ animationDelay: '0.4s' }}
                   >
                     <CardHeader className="text-center pb-4">
                       <div className="w-16 h-16 bg-gradient-to-br from-blue-400 to-champagne-400 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
+                        <span className="text-2xl">🎯</span>
+                      </div>
+                      <CardTitle className="luxury-text text-xl text-champagne-800 mb-2">
+                        상황별 향수
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="text-center pt-0">
+                      <CardDescription className="text-champagne-700 leading-relaxed text-sm">
+                        특별한 순간에 어울리는 향수를 추천
+                      </CardDescription>
+                    </CardContent>
+                  </Card>
+
+                  <Card 
+                    className="perfume-card cursor-pointer hover:scale-105 transition-all duration-500 animate-slide-in border-0 shadow-2xl bg-gradient-to-br from-orange-50 to-orange-100"
+                    onClick={() => setCurrentView('price-browse')}
+                    style={{ animationDelay: '0.6s' }}
+                  >
+                    <CardHeader className="text-center pb-4">
+                      <div className="w-16 h-16 bg-gradient-to-br from-orange-400 to-champagne-400 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
                         <span className="text-2xl">💰</span>
                       </div>
                       <CardTitle className="luxury-text text-xl text-champagne-800 mb-2">
@@ -148,26 +168,6 @@ const Index = () => {
                     <CardContent className="text-center pt-0">
                       <CardDescription className="text-champagne-700 leading-relaxed text-sm">
                         예산에 맞는 향수를 쉽게 찾아보기
-                      </CardDescription>
-                    </CardContent>
-                  </Card>
-
-                  <Card 
-                    className="perfume-card cursor-pointer hover:scale-105 transition-all duration-500 animate-slide-in border-0 shadow-2xl bg-gradient-to-br from-orange-50 to-orange-100"
-                    onClick={() => setCurrentView('community')}
-                    style={{ animationDelay: '0.6s' }}
-                  >
-                    <CardHeader className="text-center pb-4">
-                      <div className="w-16 h-16 bg-gradient-to-br from-orange-400 to-champagne-400 rounded-full flex items-center justify-center mx-auto mb-4 shadow-lg">
-                        <span className="text-2xl">👥</span>
-                      </div>
-                      <CardTitle className="luxury-text text-xl text-champagne-800 mb-2">
-                        향수 커뮤니티
-                      </CardTitle>
-                    </CardHeader>
-                    <CardContent className="text-center pt-0">
-                      <CardDescription className="text-champagne-700 leading-relaxed text-sm">
-                        리뷰와 향조 정보를 함께 공유
                       </CardDescription>
                     </CardContent>
                   </Card>
@@ -242,8 +242,8 @@ const Index = () => {
                         ))}
                       </div>
                       <p className="text-champagne-700 mb-6 leading-relaxed">
-                        "오늘의 향수 추천 기능 덕분에 
-                        매일 상황에 맞는 완벽한 향수를 선택할 수 있어요."
+                        "다양한 상황에 맞는 향수 추천 덕분에 
+                        매일 완벽한 향수를 선택할 수 있어요."
                       </p>
                       <div className="flex items-center">
                         <div className="w-12 h-12 bg-purple-400 rounded-full flex items-center justify-center mr-4">
@@ -260,9 +260,10 @@ const Index = () => {
               </div>
             </section>
 
-            {/* CTA Section with improved text visibility */}
-            <section className="py-24 bg-gradient-to-r from-golden-gradient via-rose-400 to-purple-400">
-              <div className="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+            {/* CTA Section */}
+            <section className="py-24 bg-gradient-to-r from-golden-gradient via-rose-400 to-purple-400 relative">
+              <div className="absolute inset-0 bg-black/20"></div>
+              <div className="relative max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
                 <div className="inline-flex items-center justify-center w-24 h-24 bg-white/20 backdrop-blur-sm rounded-full mb-8 shadow-xl">
                   <span className="text-4xl">🎯</span>
                 </div>
@@ -289,7 +290,7 @@ const Index = () => {
   return (
     <SidebarProvider>
       <div className="min-h-screen flex w-full">
-        <AppSidebar />
+        <AppSidebar currentView={currentView} onViewChange={setCurrentView} />
         <div className="flex-1">
           {currentView !== 'home' && (
             <nav className="sticky top-0 z-50 glass-effect px-4 py-4 backdrop-blur-lg bg-white/70 border-b border-champagne-200/50">
