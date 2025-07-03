@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { ExternalLink, ShoppingCart } from 'lucide-react';
 
 interface PriceBasedBrowsingProps {
   onBack: () => void;
@@ -18,9 +19,27 @@ const PriceBasedBrowsing: React.FC<PriceBasedBrowsingProps> = ({ onBack }) => {
       icon: '💝',
       color: 'from-green-50 to-green-100',
       perfumes: [
-        { name: 'Body Shop White Musk', brand: 'The Body Shop', price: '89,000원', rating: 4.2 },
-        { name: 'Zara Rose', brand: 'Zara', price: '65,000원', rating: 4.0 },
-        { name: 'Nature Republic Forest Story', brand: 'Nature Republic', price: '45,000원', rating: 3.8 }
+        { 
+          name: 'Body Shop White Musk', 
+          brand: 'The Body Shop', 
+          price: '89,000원', 
+          rating: 4.2,
+          purchaseUrl: 'https://www.thebodyshop.co.kr/product/white-musk-eau-de-toilette'
+        },
+        { 
+          name: 'Zara Rose', 
+          brand: 'Zara', 
+          price: '65,000원', 
+          rating: 4.0,
+          purchaseUrl: 'https://www.zara.com/kr/ko/rose-eau-de-toilette'
+        },
+        { 
+          name: 'Nature Republic Forest Story', 
+          brand: 'Nature Republic', 
+          price: '45,000원', 
+          rating: 3.8,
+          purchaseUrl: 'https://www.naturerepublic.com/product/forest-story'
+        }
       ]
     },
     {
@@ -30,9 +49,27 @@ const PriceBasedBrowsing: React.FC<PriceBasedBrowsingProps> = ({ onBack }) => {
       icon: '🌟',
       color: 'from-blue-50 to-blue-100',
       perfumes: [
-        { name: 'Light Blue', brand: 'Dolce & Gabbana', price: '165,000원', rating: 4.5 },
-        { name: 'Good Girl', brand: 'Carolina Herrera', price: '145,000원', rating: 4.4 },
-        { name: 'Flowerbomb', brand: 'Viktor & Rolf', price: '180,000원', rating: 4.6 }
+        { 
+          name: 'Light Blue', 
+          brand: 'Dolce & Gabbana', 
+          price: '165,000원', 
+          rating: 4.5,
+          purchaseUrl: 'https://www.sephora.com/product/light-blue-eau-de-toilette'
+        },
+        { 
+          name: 'Good Girl', 
+          brand: 'Carolina Herrera', 
+          price: '145,000원', 
+          rating: 4.4,
+          purchaseUrl: 'https://www.carolinaherrera.com/kr/fragrance/good-girl'
+        },
+        { 
+          name: 'Flowerbomb', 
+          brand: 'Viktor & Rolf', 
+          price: '180,000원', 
+          rating: 4.6,
+          purchaseUrl: 'https://www.sephora.com/product/flowerbomb-eau-de-parfum'
+        }
       ]
     },
     {
@@ -42,9 +79,27 @@ const PriceBasedBrowsing: React.FC<PriceBasedBrowsingProps> = ({ onBack }) => {
       icon: '👑',
       color: 'from-purple-50 to-purple-100',
       perfumes: [
-        { name: 'Santal 33', brand: 'Le Labo', price: '320,000원', rating: 4.7 },
-        { name: 'Black Opium', brand: 'YSL', price: '285,000원', rating: 4.5 },
-        { name: 'La Vie Est Belle', brand: 'Lancôme', price: '240,000원', rating: 4.3 }
+        { 
+          name: 'Santal 33', 
+          brand: 'Le Labo', 
+          price: '320,000원', 
+          rating: 4.7,
+          purchaseUrl: 'https://www.lelabofragrances.com/santal-33'
+        },
+        { 
+          name: 'Black Opium', 
+          brand: 'YSL', 
+          price: '285,000원', 
+          rating: 4.5,
+          purchaseUrl: 'https://www.yslbeauty.com/black-opium'
+        },
+        { 
+          name: 'La Vie Est Belle', 
+          brand: 'Lancôme', 
+          price: '240,000원', 
+          rating: 4.3,
+          purchaseUrl: 'https://www.lancome.com/la-vie-est-belle'
+        }
       ]
     },
     {
@@ -54,12 +109,34 @@ const PriceBasedBrowsing: React.FC<PriceBasedBrowsingProps> = ({ onBack }) => {
       icon: '💎',
       color: 'from-champagne-50 to-champagne-100',
       perfumes: [
-        { name: 'Baccarat Rouge 540', brand: 'Maison Francis Kurkdjian', price: '480,000원', rating: 4.8 },
-        { name: 'Oud Wood', brand: 'Tom Ford', price: '520,000원', rating: 4.9 },
-        { name: 'Grand Soir', brand: 'Maison Francis Kurkdjian', price: '450,000원', rating: 4.7 }
+        { 
+          name: 'Baccarat Rouge 540', 
+          brand: 'Maison Francis Kurkdjian', 
+          price: '480,000원', 
+          rating: 4.8,
+          purchaseUrl: 'https://www.maisonfranciskurkdjian.com/baccarat-rouge-540'
+        },
+        { 
+          name: 'Oud Wood', 
+          brand: 'Tom Ford', 
+          price: '520,000원', 
+          rating: 4.9,
+          purchaseUrl: 'https://www.tomford.com/oud-wood'
+        },
+        { 
+          name: 'Grand Soir', 
+          brand: 'Maison Francis Kurkdjian', 
+          price: '450,000원', 
+          rating: 4.7,
+          purchaseUrl: 'https://www.maisonfranciskurkdjian.com/grand-soir'
+        }
       ]
     }
   ];
+
+  const handlePurchase = (url: string) => {
+    window.open(url, '_blank');
+  };
 
   if (selectedPriceRange) {
     const selectedRange = priceRanges.find(range => range.id === selectedPriceRange);
@@ -102,9 +179,23 @@ const PriceBasedBrowsing: React.FC<PriceBasedBrowsingProps> = ({ onBack }) => {
                         {perfume.price}
                       </div>
                       
-                      <Button className="w-full bg-golden-gradient text-white rounded-full hover:scale-105 transition-transform">
-                        상세 정보 보기
-                      </Button>
+                      <div className="flex gap-2">
+                        <Button 
+                          className="flex-1 bg-golden-gradient text-white rounded-full hover:scale-105 transition-transform"
+                          onClick={() => handlePurchase(perfume.purchaseUrl)}
+                        >
+                          <ShoppingCart className="w-4 h-4 mr-2" />
+                          구매하기
+                        </Button>
+                        <Button 
+                          variant="outline"
+                          size="icon"
+                          className="border-champagne-300 text-champagne-700 rounded-full hover:bg-champagne-50"
+                          onClick={() => handlePurchase(perfume.purchaseUrl)}
+                        >
+                          <ExternalLink className="w-4 h-4" />
+                        </Button>
+                      </div>
                     </CardContent>
                   </Card>
                 ))}
