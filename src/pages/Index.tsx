@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/AppSidebar";
 import PerfumeQuiz from "@/components/PerfumeQuiz";
 import SituationalPerfume from "@/components/SituationalPerfume";
@@ -288,42 +287,12 @@ const Index = () => {
   };
 
   return (
-    <SidebarProvider>
-      <div className="min-h-screen flex w-full">
-        <AppSidebar currentView={currentView} onViewChange={setCurrentView} />
-        <div className="flex-1">
-          {currentView !== 'home' && (
-            <nav className="sticky top-0 z-50 glass-effect px-4 py-4 backdrop-blur-lg bg-white/70 border-b border-champagne-200/50">
-              <div className="max-w-7xl mx-auto flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <SidebarTrigger />
-                  <Button 
-                    variant="ghost" 
-                    onClick={() => setCurrentView('home')}
-                    className="luxury-text text-2xl font-bold text-champagne-800 hover:bg-champagne-50 rounded-full px-6 py-3"
-                  >
-                    ✨ Aura Match
-                  </Button>
-                </div>
-                <Button 
-                  variant="outline" 
-                  onClick={() => setCurrentView('home')}
-                  className="text-champagne-700 border-2 border-champagne-300 hover:bg-champagne-50 rounded-full px-6 py-3 font-semibold"
-                >
-                  🏠 홈으로
-                </Button>
-              </div>
-            </nav>
-          )}
-          {currentView === 'home' && (
-            <div className="p-4">
-              <SidebarTrigger />
-            </div>
-          )}
-          {renderView()}
-        </div>
+    <div className="min-h-screen">
+      <AppSidebar currentView={currentView} onViewChange={setCurrentView} />
+      <div className="w-full">
+        {renderView()}
       </div>
-    </SidebarProvider>
+    </div>
   );
 };
 

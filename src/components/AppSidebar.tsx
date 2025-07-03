@@ -1,8 +1,6 @@
 
 import React from 'react';
-import { useLocation } from 'react-router-dom';
 import { 
-  Home, 
   Sparkles, 
   Target, 
   Heart, 
@@ -10,20 +8,8 @@ import {
   Flower, 
   Users 
 } from 'lucide-react';
-import {
-  Sidebar,
-  SidebarContent,
-  SidebarGroup,
-  SidebarGroupContent,
-  SidebarGroupLabel,
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  useSidebar,
-} from "@/components/ui/sidebar";
 
 const menuItems = [
-  { title: "홈", view: "home", icon: Home },
   { title: "향수 추천", view: "quiz", icon: Sparkles },
   { title: "상황별 향수", view: "situational", icon: Target },
   { title: "내 향수 관리", view: "collection", icon: Heart },
@@ -38,51 +24,73 @@ interface AppSidebarProps {
 }
 
 export function AppSidebar({ currentView, onViewChange }: AppSidebarProps) {
-  const { state } = useSidebar();
-  const isCollapsed = state === "collapsed";
-
   return (
-    <Sidebar className={isCollapsed ? "w-14" : "w-64"} collapsible="icon">
-      <SidebarContent>
-        <SidebarGroup>
-          <SidebarGroupLabel className="px-4 py-2">
-            <div className="flex items-center gap-2">
-              <span className="text-2xl">✨</span>
-              {!isCollapsed && (
-                <span className="luxury-text text-lg font-bold text-champagne-800">
-                  Aura Match
-                </span>
-              )}
-            </div>
-          </SidebarGroupLabel>
+    <nav className="w-full bg-white/95 backdrop-blur-lg border-b border-champagne-200/50 shadow-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          <div className="flex items-center gap-2">
+            <span className="text-2xl">✨</span>
+            <span className="luxury-text text-xl font-bold text-champagne-800">
+              Aura Match
+            </span>
+          </div>
           
-          <SidebarGroupContent>
-            <SidebarMenu>
-              {menuItems.map((item) => {
-                const isActive = currentView === item.view;
-                
-                return (
-                  <SidebarMenuItem key={item.title}>
-                    <SidebarMenuButton asChild>
-                      <button 
-                        onClick={() => onViewChange(item.view)}
-                        className={`w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${
-                          isActive 
-                            ? "bg-golden-gradient text-white font-semibold shadow-lg" 
-                            : "text-champagne-700 hover:bg-champagne-50"
-                        }`}
-                      >
-                        <item.icon className="w-5 h-5 flex-shrink-0" />
-                        {!isCollapsed && <span>{item.title}</span>}
-                      </button>
-                    </SidebarMenuButton>
-                  </SidebarMenuItem>
-                );
-              })}
-            </SidebarMenu>
-          </SidebarGroupContent>
-        </SidebarGroup>
-      </SidebarContent>
-    </Sidebar>
+          <div className="hidden md:flex items-center space-x-1">
+            {menuItems.map((item) => {
+              const isActive = currentView === item.view;
+              
+              return (
+                <button
+                  key={item.title}
+                  onClick={() => onViewChange(item.view)}
+                  className={`flex items-center gap-2 px-4 py-2 rounded-lg transition-colors text-sm font-medium ${
+                    isActive 
+                      ? "bg-golden-gradient text-white shadow-lg" 
+                      : "text-champagne-700 hover:bg-champagne-50"
+                  }`}
+                >
+                  <item.icon className="w-4 h-4" />
+                  <span>{item.title}</span>
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Mobile menu button */}
+          <div className="md:hidden">
+            <button
+              onClick={() => onViewChange('home')}
+              className="text-champagne-700 hover:bg-champagne-50 p-2 rounded-lg"
+            >
+              <span className="text-xl">🏠</span>
+            </button>
+          </div>
+        </div>
+        
+        {/* Mobile menu */}
+        <div className="md:hidden pb-4">
+          <div className="grid grid-cols-2 gap-2">
+            {menuItems.map((item) => {
+              const isActive = currentView === item.view;
+              
+              return (
+                <button
+                  key={item.title}
+                  onClick={() => onViewChange(item.view)}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-lg transition-colors text-sm ${
+                    isActive 
+                      ? "bg-golden-gradient text-white" 
+                      : "text-champagne-700 hover:bg-champagne-50"
+                  }`}
+                >
+                  <item.icon className="w-4 h-4" />
+                  <span>{item.title}</span>
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      </div>
+    </nav>
   );
 }
